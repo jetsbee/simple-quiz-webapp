@@ -22,14 +22,14 @@ export default function Quiz() {
             onSubmit={(e) => {
               e.preventDefault();
 
-              const answers = e.currentTarget.elements.namedItem(
-                "answers"
-              ) as RadioNodeList;
-              if (!answers.value) return;
+              const { value: selectedAnswer } =
+                e.currentTarget.elements.namedItem("answers") as RadioNodeList;
+              if (!selectedAnswer) return;
+
               console.log(
-                answers.value,
+                selectedAnswer,
                 data[questionsIdx].correctAnswer,
-                data[questionsIdx].correctAnswer === answers.value
+                data[questionsIdx].correctAnswer === selectedAnswer
               );
 
               setQuestionsIdx((idx) =>
