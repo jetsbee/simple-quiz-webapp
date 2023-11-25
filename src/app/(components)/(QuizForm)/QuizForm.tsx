@@ -1,8 +1,10 @@
 import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
+import { useState } from "react";
 import { Props } from "./QuizForm.type";
 
 export const QuizForm = ({ quiz }: Props) => {
   const { isAnswerSelected, setIsAnswerSelected } = useQuizStore();
+  const [selectedAnswer, setSelectedAnswer] = useState<string>();
 
   return (
     quiz && (
@@ -10,15 +12,10 @@ export const QuizForm = ({ quiz }: Props) => {
         <fieldset
           disabled={isAnswerSelected}
           onChange={(e) => {
-            const { value: selectedAnswer } = e.target as HTMLInputElement;
-            if (!selectedAnswer) return;
+            if (!(e.target instanceof HTMLInputElement)) return;
 
-            console.log(
-              selectedAnswer,
-              quiz.correctAnswer,
-              quiz.correctAnswer === selectedAnswer
-            );
-
+            const { value: selectedAnswer } = e.target;
+            setSelectedAnswer(selectedAnswer);
             setIsAnswerSelected(true);
           }}
         >
@@ -30,6 +27,15 @@ export const QuizForm = ({ quiz }: Props) => {
             </label>
           ))}
         </fieldset>
+        {isAnswerSelected &&
+          (selectedAnswer === quiz.correctAnswer ? (
+            <p>정답입니다.</p>
+          ) : (
+            <>
+              <p>오답입니다.</p>
+              <p>정답: {quiz.correctAnswer}</p>
+            </>
+          ))}
       </form>
     )
   );
