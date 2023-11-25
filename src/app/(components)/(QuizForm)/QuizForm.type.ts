@@ -5,5 +5,5 @@ interface Quiz {
 }
 
 export interface Props {
-  quiz?: Quiz;
+  quiz: Quiz;
 }
