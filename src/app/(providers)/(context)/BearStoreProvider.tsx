@@ -16,7 +16,7 @@ export const BearStoreProvider = ({
 }: BearStoreProviderProps) => {
   const storeRef = useRef<BearStore>();
   if (!storeRef.current) {
-    bearStoreWithoutInitProps.persist.clearStorage();
+    (bearStoreWithoutInitProps as any).persist?.clearStorage();
     storeRef.current = createBearStore(props);
   }
   return (
