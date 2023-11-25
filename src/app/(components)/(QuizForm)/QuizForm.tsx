@@ -1,30 +1,27 @@
 import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
 import { Props } from "./QuizForm.type";
 
-export const QuizForm = ({ quiz, numOfQuiz }: Props) => {
-  const { quizIdx, incrementQuizIdx } = useQuizStore();
+export const QuizForm = ({ quiz }: Props) => {
+  const { isAnswerSelected, setIsAnswerSelected } = useQuizStore();
 
   return (
     quiz && (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
+      <form>
+        <fieldset
+          disabled={isAnswerSelected}
+          onChange={(e) => {
+            const { value: selectedAnswer } = e.target as HTMLInputElement;
+            if (!selectedAnswer) return;
 
-          const { value: selectedAnswer } = e.currentTarget.elements.namedItem(
-            "answers"
-          ) as RadioNodeList;
-          if (!selectedAnswer) return;
+            console.log(
+              selectedAnswer,
+              quiz.correctAnswer,
+              quiz.correctAnswer === selectedAnswer
+            );
 
-          console.log(
-            selectedAnswer,
-            quiz.correctAnswer,
-            quiz.correctAnswer === selectedAnswer
-          );
-
-          quizIdx < numOfQuiz - 1 && incrementQuizIdx();
-        }}
-      >
-        <fieldset>
+            setIsAnswerSelected(true);
+          }}
+        >
           <legend>{quiz.question}</legend>
           {quiz.answers.map((answer) => (
             <label key={answer}>
@@ -33,7 +30,6 @@ export const QuizForm = ({ quiz, numOfQuiz }: Props) => {
             </label>
           ))}
         </fieldset>
-        <button type="submit">정답 확인</button>
       </form>
     )
   );

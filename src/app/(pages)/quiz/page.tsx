@@ -7,14 +7,18 @@ import { useQuestions } from "@/app/(states)/(server)/TriviaQuestions";
 
 export default function Quiz() {
   const { data, isFetching, isError } = useQuestions();
-  const { quizIdx } = useQuizStore();
-
+  const { quizIdx, isAnswerSelected, setIsAnswerSelected, incrementQuizIdx } =
+    useQuizStore();
+  const numOfQuiz = data?.length ?? 0;
+  const isLastQuiz = quizIdx === numOfQuiz - 1;
+  const safelySetNextQuiz = () => {
+    !isLastQuiz && incrementQuizIdx();
+  };
   const propsForQuizIndicator = {
-    numOfQuiz: data?.length ?? 0,
+    numOfQuiz,
   };
   const propsForQuizForm = {
     quiz: data && data[quizIdx],
-    numOfQuiz: data?.length ?? 0,
   };
 
   return (
@@ -27,6 +31,17 @@ export default function Quiz() {
         <>
           <QuizIndicator {...propsForQuizIndicator} />
           <QuizForm {...propsForQuizForm} />
+          {isAnswerSelected && !isLastQuiz && (
+            <button
+              onClick={() => {
+                setIsAnswerSelected(false);
+                safelySetNextQuiz();
+              }}
+            >
+              다음 문항 풀기
+            </button>
+          )}
+          {isAnswerSelected && isLastQuiz && <button>결과 보기</button>}
         </>
       )}
     </main>

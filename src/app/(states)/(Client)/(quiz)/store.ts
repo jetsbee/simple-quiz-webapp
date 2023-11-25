@@ -4,15 +4,18 @@ import { storeResetFns } from "../(_zustand)/zustandWithResetFns";
 
 export interface QuizProps {
   quizIdx: number;
+  isAnswerSelected: boolean;
 }
 
 export interface QuizState extends QuizProps {
   incrementQuizIdx: () => void;
+  setIsAnswerSelected: (isAnswerSelected: boolean) => void;
 }
 
 export const createQuizStore = (initProps?: Partial<QuizProps>) => {
   const DEFAULT_PROPS: QuizProps = {
     quizIdx: 0,
+    isAnswerSelected: false,
   };
 
   return createStore<QuizState>()(
@@ -27,13 +30,16 @@ export const createQuizStore = (initProps?: Partial<QuizProps>) => {
             set(({ quizIdx }) => ({
               quizIdx: ++quizIdx,
             })),
+          setIsAnswerSelected: (isAnswerSelected) => set({ isAnswerSelected }),
         };
       },
       {
         name: "quiz-storage",
         partialize: (state) =>
           Object.fromEntries(
-            Object.entries(state).filter(([key]) => !["quizIdx"].includes(key))
+            Object.entries(state).filter(
+              ([key]) => !["quizIdx", "isAnswerSelected"].includes(key)
+            )
           ),
       }
     )
