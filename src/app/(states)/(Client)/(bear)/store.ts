@@ -1,4 +1,4 @@
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
 import { storeResetFns } from "../(_zustand)/zustandWithResetFns";
 
@@ -25,7 +25,7 @@ export const createBearStore = (initProps?: Partial<BearProps>) => {
           addBear: () => set((state) => ({ bears: ++state.bears })),
         };
       },
-      { name: "bear-storage" }
+      { name: "bear-storage", storage: createJSONStorage(() => sessionStorage) }
     )
   );
 };

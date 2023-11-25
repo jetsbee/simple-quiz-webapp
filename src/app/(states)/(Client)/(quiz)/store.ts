@@ -1,4 +1,4 @@
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
 import { storeResetFns } from "../(_zustand)/zustandWithResetFns";
 
@@ -35,6 +35,7 @@ export const createQuizStore = (initProps?: Partial<QuizProps>) => {
       },
       {
         name: "quiz-storage",
+        storage: createJSONStorage(() => sessionStorage),
         partialize: (state) =>
           Object.fromEntries(
             Object.entries(state).filter(
