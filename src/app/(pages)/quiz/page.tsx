@@ -1,11 +1,21 @@
 "use client";
 
+import { QuizForm } from "@/app/(components)/(QuizForm)/QuizForm";
+import { QuizIndicator } from "@/app/(components)/(QuizIndicator)/QuizIndicator";
+import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
 import { useQuestions } from "@/app/(states)/(server)/TriviaQuestions";
-import { useState } from "react";
 
 export default function Quiz() {
   const { data, isFetching, isError } = useQuestions();
-  const [questionsIdx, setQuestionsIdx] = useState(0);
+  const { quizIdx } = useQuizStore();
+
+  const propsForQuizIndicator = {
+    numOfQuiz: data?.length ?? 0,
+  };
+  const propsForQuizForm = {
+    quiz: data && data[quizIdx],
+    numOfQuiz: data?.length ?? 0,
+  };
 
   return (
     <main>
@@ -15,39 +25,8 @@ export default function Quiz() {
         <p>로딩중입니다.</p>
       ) : (
         <>
-          <p>
-            {questionsIdx + 1}/{data.length}
-          </p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-
-              const { value: selectedAnswer } =
-                e.currentTarget.elements.namedItem("answers") as RadioNodeList;
-              if (!selectedAnswer) return;
-
-              console.log(
-                selectedAnswer,
-                data[questionsIdx].correctAnswer,
-                data[questionsIdx].correctAnswer === selectedAnswer
-              );
-
-              setQuestionsIdx((idx) =>
-                idx === data.length - 1 ? idx : idx + 1
-              );
-            }}
-          >
-            <fieldset>
-              <legend>{data[questionsIdx].question}</legend>
-              {data[questionsIdx].answers.map((answer) => (
-                <label key={answer}>
-                  <input type="radio" name="answers" value={answer} />
-                  {answer}
-                </label>
-              ))}
-            </fieldset>
-            <button type="submit">정답 확인</button>
-          </form>
+          <QuizIndicator {...propsForQuizIndicator} />
+          <QuizForm {...propsForQuizForm} />
         </>
       )}
     </main>
