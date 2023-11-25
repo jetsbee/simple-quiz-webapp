@@ -1,10 +1,10 @@
 "use client";
 
-import { TriviaQuestionsResp, getTriviaQuestions } from "@/app/(utils)/api";
-import { TRIVIA_QUESTIONS_QK } from "@/app/(utils)/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 import he from "he";
 import { useCallback } from "react";
+import { TriviaQuestionsResp, getTriviaQuestions } from "./(_networking)/api";
+import { TRIVIA_QUESTIONS_QK } from "./(_react-query)/queryKeys";
 
 // typing - ref. https://github.com/TanStack/query/discussions/1195#discussioncomment-110896
 const useTriviaQuestionsRespQuery = <T extends any = TriviaQuestionsResp>(
