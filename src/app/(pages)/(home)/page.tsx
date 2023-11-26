@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main>
       <button onClick={() => router.push(`/quiz`)}>퀴즈 풀기</button>
-      <button onClick={() => router.push(`/results`)}>오답 노트</button>
+      <button onClick={() => router.push(`/reviews`)}>오답 노트</button>
     </main>
   );
 }

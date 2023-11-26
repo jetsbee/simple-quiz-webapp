@@ -10,7 +10,7 @@ import { useRef } from "react";
 // Provider wrapper
 type QuizStoreProviderProps = React.PropsWithChildren<QuizProps>;
 
-export const BearStoreProvider = ({
+export const QuizStoreProvider = ({
   children,
   ...props
 }: QuizStoreProviderProps) => {

@@ -1,12 +1,21 @@
 import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
-import { useState } from "react";
+import { useAddReview } from "@/app/(states)/(Client)/(review)/hooks";
+import { Review } from "@/app/(states)/(Client)/(review)/store";
+import { useRef, useState } from "react";
 import { Props } from "./QuizForm.type";
 
 export const QuizForm = ({
-  quiz: { question, answers, correctAnswer },
+  quiz: { question, answers, correctAnswer, numOfQuiz, startTime },
 }: Props) => {
-  const { isAnswerSelected, setIsAnswerSelected } = useQuizStore();
+  const { isAnswerSelected, setIsAnswerSelected, quizIdx } = useQuizStore();
   const [selectedAnswer, setSelectedAnswer] = useState<string>();
+  const addReview = useAddReview();
+  const quizActivity = useRef<Review>({
+    numOfQuiz,
+    startTime,
+    reviewNotes: [],
+    endTime: startTime,
+  }).current;
 
   const isAnswerSelectedAndCorrect =
     isAnswerSelected && selectedAnswer === correctAnswer;
@@ -21,6 +30,20 @@ export const QuizForm = ({
       const { value: selectedAnswer } = e.target;
       setSelectedAnswer(selectedAnswer);
       setIsAnswerSelected(true);
+
+      if (selectedAnswer !== correctAnswer) {
+        quizActivity.reviewNotes.push({
+          question,
+          answers,
+          correctAnswer,
+          selectedAnswer,
+        });
+      }
+
+      if (quizIdx === numOfQuiz - 1) {
+        quizActivity.endTime = Date.now();
+        addReview({ ...quizActivity });
+      }
     },
   };
 

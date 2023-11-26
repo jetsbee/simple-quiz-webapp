@@ -1,13 +1,17 @@
 "use client";
 
+import { QuizResult } from "@/app/(components)/(QuizResult)/QuizResult";
 import { useIdParams } from "@/app/(hooks)/useIdParams";
 
-export default function QuizResult() {
-  const id = useIdParams();
+export default function Result() {
+  const id = useIdParams() ?? "";
+  const propsForQuizResult = {
+    id: +id,
+  };
 
   return (
     <main>
-      <p>Hello, {id} quiz result!</p>
+      <QuizResult {...propsForQuizResult} />
     </main>
   );
 }

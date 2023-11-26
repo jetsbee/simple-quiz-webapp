@@ -4,7 +4,8 @@ import { QuizForm } from "@/app/(components)/(QuizForm)/QuizForm";
 import { QuizIndicator } from "@/app/(components)/(QuizIndicator)/QuizIndicator";
 import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
 import { useQuestions } from "@/app/(states)/(server)/TriviaQuestions";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 export default function Quiz() {
   const { data, isPending, isError, isFetching } = useQuestions();
@@ -15,6 +16,8 @@ export default function Quiz() {
     incrementQuizIdx,
     reset,
   } = useQuizStore();
+  const router = useRouter();
+  const startTime = useRef(Date.now()).current;
 
   useEffect(() => {
     return function cleanUp() {
@@ -41,7 +44,7 @@ export default function Quiz() {
     numOfQuiz,
   };
   const propsForQuizForm = {
-    quiz: data[quizIdx],
+    quiz: { ...data[quizIdx], numOfQuiz, startTime },
   };
 
   return (
@@ -58,7 +61,15 @@ export default function Quiz() {
           다음 문항 풀기
         </button>
       )}
-      {isSelectedAndDone && <button>결과 보기</button>}
+      {isSelectedAndDone && (
+        <button
+          onClick={() => {
+            router.replace(`/results?id=${startTime}`);
+          }}
+        >
+          결과 보기
+        </button>
+      )}
     </main>
   );
 }

@@ -1,4 +1,3 @@
-import { createJSONStorage, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
 import { storeResetFns } from "../(_zustand)/zustandWithResetFns";
 
@@ -19,34 +18,20 @@ export const createQuizStore = (initProps?: Partial<QuizProps>) => {
     isAnswerSelected: false,
   };
 
-  return createStore<QuizState>()(
-    persist(
-      (set) => {
-        storeResetFns.add(() => set(DEFAULT_PROPS));
+  return createStore<QuizState>()((set) => {
+    storeResetFns.add(() => set(DEFAULT_PROPS));
 
-        return {
-          ...DEFAULT_PROPS,
-          ...initProps,
-          incrementQuizIdx: () =>
-            set(({ quizIdx }) => ({
-              quizIdx: ++quizIdx,
-            })),
-          setIsAnswerSelected: (isAnswerSelected) => set({ isAnswerSelected }),
-          reset: () => set(DEFAULT_PROPS),
-        };
-      },
-      {
-        name: "quiz-storage",
-        storage: createJSONStorage(() => sessionStorage),
-        partialize: (state) =>
-          Object.fromEntries(
-            Object.entries(state).filter(
-              ([key]) => !["quizIdx", "isAnswerSelected"].includes(key)
-            )
-          ),
-      }
-    )
-  );
+    return {
+      ...DEFAULT_PROPS,
+      ...initProps,
+      incrementQuizIdx: () =>
+        set(({ quizIdx }) => ({
+          quizIdx: ++quizIdx,
+        })),
+      setIsAnswerSelected: (isAnswerSelected) => set({ isAnswerSelected }),
+      reset: () => set(DEFAULT_PROPS),
+    };
+  });
 };
 
 export type QuizStore = ReturnType<typeof createQuizStore>;
