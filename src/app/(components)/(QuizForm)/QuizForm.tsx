@@ -1,13 +1,16 @@
+"use client";
+
 import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
 import { useAddReview } from "@/app/(states)/(Client)/(review)/hooks";
 import { Review } from "@/app/(states)/(Client)/(review)/store";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Props } from "./QuizForm.type";
 
 export const QuizForm = ({
   quiz: { question, answers, correctAnswer, numOfQuiz, startTime },
 }: Props) => {
-  const { isAnswerSelected, setIsAnswerSelected, quizIdx } = useQuizStore();
+  const { isAnswerSelected, setIsAnswerSelected, quizIdx, reset } =
+    useQuizStore();
   const [selectedAnswer, setSelectedAnswer] = useState<string>();
   const addReview = useAddReview();
   const quizActivity = useRef<Review>({
@@ -16,6 +19,12 @@ export const QuizForm = ({
     reviewNotes: [],
     endTime: startTime,
   }).current;
+
+  useEffect(() => {
+    return function cleanUp() {
+      reset();
+    };
+  }, [reset]);
 
   const isAnswerSelectedAndCorrect =
     isAnswerSelected && selectedAnswer === correctAnswer;

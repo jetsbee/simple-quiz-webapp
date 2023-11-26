@@ -5,25 +5,14 @@ import { QuizIndicator } from "@/app/(components)/(QuizIndicator)/QuizIndicator"
 import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
 import { useQuestions } from "@/app/(states)/(server)/TriviaQuestions";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 export default function Quiz() {
   const { data, isPending, isError, isFetching } = useQuestions();
-  const {
-    quizIdx,
-    isAnswerSelected,
-    setIsAnswerSelected,
-    incrementQuizIdx,
-    reset,
-  } = useQuizStore();
+  const { quizIdx, isAnswerSelected, setIsAnswerSelected, incrementQuizIdx } =
+    useQuizStore();
   const router = useRouter();
   const startTime = useRef(Date.now()).current;
-
-  useEffect(() => {
-    return function cleanUp() {
-      reset();
-    };
-  }, [reset]);
 
   if (isPending || isFetching) {
     return <p>잠시 기다려 주세요.</p>;
