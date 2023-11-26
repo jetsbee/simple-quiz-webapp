@@ -18,5 +18,6 @@ export const StyledListWrapper = styled.div`
     flex-direction: column;
     gap: 1rem;
     font-size: 1.4rem;
+    text-decoration: underline;
   }
 `;
