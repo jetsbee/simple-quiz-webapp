@@ -1,11 +1,13 @@
 "use client";
 
+import { StyledButton } from "@/app/(components)/(Common)/common.styled";
 import { QuizForm } from "@/app/(components)/(QuizForm)/QuizForm";
 import { QuizIndicator } from "@/app/(components)/(QuizIndicator)/QuizIndicator";
 import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
 import { useQuestions } from "@/app/(states)/(server)/TriviaQuestions";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
+import { StyledMain } from "../(_styled)/page.styled";
 
 export default function Quiz() {
   const { data, isPending, isError, isFetching } = useQuestions();
@@ -15,10 +17,18 @@ export default function Quiz() {
   const startTime = useRef(Date.now()).current;
 
   if (isPending || isFetching) {
-    return <p>잠시 기다려 주세요.</p>;
+    return (
+      <StyledMain>
+        <p>잠시 기다려 주세요.</p>
+      </StyledMain>
+    );
   }
   if (isError || data?.length === 0) {
-    return <p>잠시 후 다시 시도해 주세요.</p>;
+    return (
+      <StyledMain>
+        <p>잠시 후 다시 시도해 주세요.</p>
+      </StyledMain>
+    );
   }
 
   const numOfQuiz = data.length;
@@ -37,28 +47,28 @@ export default function Quiz() {
   };
 
   return (
-    <main>
+    <StyledMain>
       <QuizIndicator {...propsForQuizIndicator} />
       <QuizForm {...propsForQuizForm} />
       {isSelectedAndQuizLeftMore && (
-        <button
+        <StyledButton
           onClick={() => {
             setIsAnswerSelected(false);
             safelySetNextQuiz();
           }}
         >
           다음 문항 풀기
-        </button>
+        </StyledButton>
       )}
       {isSelectedAndDone && (
-        <button
+        <StyledButton
           onClick={() => {
             router.replace(`/results?id=${startTime}`);
           }}
         >
           결과 보기
-        </button>
+        </StyledButton>
       )}
-    </main>
+    </StyledMain>
   );
 }

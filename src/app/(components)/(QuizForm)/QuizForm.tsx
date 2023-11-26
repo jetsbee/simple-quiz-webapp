@@ -4,6 +4,7 @@ import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
 import { useAddReview } from "@/app/(states)/(Client)/(review)/hooks";
 import { Review } from "@/app/(states)/(Client)/(review)/store";
 import { useEffect, useRef, useState } from "react";
+import { StyledFieldset, StyledForm } from "./QuizForm.styled";
 import { Props } from "./QuizForm.type";
 
 export const QuizForm = ({
@@ -57,8 +58,8 @@ export const QuizForm = ({
   };
 
   return (
-    <form>
-      <fieldset {...propsForFieldset}>
+    <StyledForm>
+      <StyledFieldset {...propsForFieldset}>
         <legend>{question}</legend>
         {answers.map((answer) => (
           <label key={answer}>
@@ -66,7 +67,7 @@ export const QuizForm = ({
             {answer}
           </label>
         ))}
-      </fieldset>
+      </StyledFieldset>
       {isAnswerSelectedAndCorrect && <p>정답입니다.</p>}
       {isAnswerSelectedAndWrong && (
         <>
@@ -74,6 +75,6 @@ export const QuizForm = ({
           <p>정답: {correctAnswer}</p>
         </>
       )}
-    </form>
+    </StyledForm>
   );
 };
