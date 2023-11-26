@@ -10,6 +10,7 @@ export interface QuizProps {
 export interface QuizState extends QuizProps {
   incrementQuizIdx: () => void;
   setIsAnswerSelected: (isAnswerSelected: boolean) => void;
+  reset: () => void;
 }
 
 export const createQuizStore = (initProps?: Partial<QuizProps>) => {
@@ -31,6 +32,7 @@ export const createQuizStore = (initProps?: Partial<QuizProps>) => {
               quizIdx: ++quizIdx,
             })),
           setIsAnswerSelected: (isAnswerSelected) => set({ isAnswerSelected }),
+          reset: () => set(DEFAULT_PROPS),
         };
       },
       {

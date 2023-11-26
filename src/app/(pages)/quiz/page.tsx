@@ -4,11 +4,23 @@ import { QuizForm } from "@/app/(components)/(QuizForm)/QuizForm";
 import { QuizIndicator } from "@/app/(components)/(QuizIndicator)/QuizIndicator";
 import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
 import { useQuestions } from "@/app/(states)/(server)/TriviaQuestions";
+import { useEffect } from "react";
 
 export default function Quiz() {
   const { data, isPending, isError, isFetching } = useQuestions();
-  const { quizIdx, isAnswerSelected, setIsAnswerSelected, incrementQuizIdx } =
-    useQuizStore();
+  const {
+    quizIdx,
+    isAnswerSelected,
+    setIsAnswerSelected,
+    incrementQuizIdx,
+    reset,
+  } = useQuizStore();
+
+  useEffect(() => {
+    return function cleanUp() {
+      reset();
+    };
+  }, [reset]);
 
   if (isPending || isFetching) {
     return <p>잠시 기다려 주세요.</p>;
