@@ -11,7 +11,16 @@ export const SelectedAnswerChart = ({
   numOfWrongAnswer: number;
 }) => {
   const data = {
-    labels: ["정답", "오답"],
+    labels: [
+      `정답 (${(
+        (numOfCorrectAnswer / (numOfCorrectAnswer + numOfWrongAnswer)) *
+        100
+      ).toFixed(1)}%)`,
+      `오답 (${(
+        (numOfWrongAnswer / (numOfCorrectAnswer + numOfWrongAnswer)) *
+        100
+      ).toFixed(1)}%)`,
+    ],
     datasets: [
       {
         data: [numOfCorrectAnswer, numOfWrongAnswer],
