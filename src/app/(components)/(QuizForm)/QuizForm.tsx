@@ -1,60 +1,21 @@
 "use client";
 
-import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
-import { useAddReview } from "@/app/(states)/(Client)/(review)/hooks";
-import { Review } from "@/app/(states)/(Client)/(review)/store";
-import { useEffect, useRef, useState } from "react";
+import { useQuizFieldset } from "./(hooks)/useQuizFieldset";
 import { StyledFieldset, StyledForm } from "./QuizForm.styled";
 import { Props } from "./QuizForm.type";
 
-export const QuizForm = ({
-  quiz: { question, answers, correctAnswer, numOfQuiz, startTime },
-}: Props) => {
-  const { isAnswerSelected, setIsAnswerSelected, quizIdx, reset } =
-    useQuizStore();
-  const [selectedAnswer, setSelectedAnswer] = useState<string>();
-  const addReview = useAddReview();
-  const quizActivity = useRef<Review>({
-    numOfQuiz,
-    startTime,
-    reviewNotes: [],
-    endTime: startTime,
-  }).current;
+export const QuizForm = ({ quiz }: Props) => {
+  const {
+    isAnswerSelected,
+    handleFieldSetChange,
+    isAnswerSelectedAndCorrect,
+    isAnswerSelectedAndWrong,
+  } = useQuizFieldset(quiz);
 
-  useEffect(() => {
-    return function cleanUp() {
-      reset();
-    };
-  }, [reset]);
-
-  const isAnswerSelectedAndCorrect =
-    isAnswerSelected && selectedAnswer === correctAnswer;
-  const isAnswerSelectedAndWrong =
-    isAnswerSelected && selectedAnswer !== correctAnswer;
-
+  const { question, answers, correctAnswer } = quiz;
   const propsForFieldset = {
     disabled: isAnswerSelected,
-    onChange: (e: React.FormEvent<HTMLFieldSetElement>) => {
-      if (!(e.target instanceof HTMLInputElement)) return;
-
-      const { value: selectedAnswer } = e.target;
-      setSelectedAnswer(selectedAnswer);
-      setIsAnswerSelected(true);
-
-      if (selectedAnswer !== correctAnswer) {
-        quizActivity.reviewNotes.push({
-          question,
-          answers,
-          correctAnswer,
-          selectedAnswer,
-        });
-      }
-
-      if (quizIdx === numOfQuiz - 1) {
-        quizActivity.endTime = Date.now();
-        addReview({ ...quizActivity });
-      }
-    },
+    onChange: handleFieldSetChange,
   };
 
   return (
@@ -63,7 +24,7 @@ export const QuizForm = ({
         <legend>{question}</legend>
         {answers.map((answer) => (
           <label key={answer}>
-            <input type="radio" name="answers" value={answer} />
+            <input type="radio" value={answer} />
             {answer}
           </label>
         ))}
