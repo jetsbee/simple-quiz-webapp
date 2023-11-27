@@ -1,11 +1,11 @@
 1:HL["/simple-quiz-webapp/_next/static/media/c9a5bc6a7c948fb0-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 2:HL["/simple-quiz-webapp/_next/static/css/698f3607e0904a11.css","style",{"crossOrigin":""}]
-0:["NtfR_zEQnmOxufQRxPqiy",[[["",{"children":["(pages)",{"children":["quiz",{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],"$L3",[[["$","link","0",{"rel":"stylesheet","href":"/simple-quiz-webapp/_next/static/css/698f3607e0904a11.css","precedence":"next","crossOrigin":""}]],"$L4"]]]]
+0:["lFbYaOgwbcUskUrlB0DdB",[[["",{"children":["(pages)",{"children":["quiz",{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],"$L3",[[["$","link","0",{"rel":"stylesheet","href":"/simple-quiz-webapp/_next/static/css/698f3607e0904a11.css","precedence":"next","crossOrigin":""}]],"$L4"]]]]
 5:I[4173,["10","static/chunks/10-7297f210dd8d1fa3.js","185","static/chunks/app/layout-e7105d35c03ddc79.js"],"ReactQueryProvider"]
 6:I[6954,[],""]
 7:I[7264,[],""]
 d:I[8297,[],""]
-e:I[4422,["540","static/chunks/540-6892f24716582f24.js","38","static/chunks/38-3c669fe2840139be.js","192","static/chunks/192-78ed37f7bed1c554.js","938","static/chunks/app/(pages)/quiz/page-df643c254793d1ea.js"],""]
+e:I[4422,["540","static/chunks/540-6892f24716582f24.js","38","static/chunks/38-3c669fe2840139be.js","192","static/chunks/192-78ed37f7bed1c554.js","938","static/chunks/app/(pages)/quiz/page-17a03c6405a9d60d.js"],""]
 8:{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"}
 9:{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"}
 a:{"display":"inline-block"}
