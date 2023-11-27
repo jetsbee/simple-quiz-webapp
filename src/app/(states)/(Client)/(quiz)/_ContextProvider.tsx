@@ -1,11 +1,11 @@
-import { QuizContext } from "@/app/(states)/(Client)/(quiz)/context";
+import { useRef } from "react";
+import { QuizContext } from "./context";
 import {
   QuizProps,
   QuizStore,
   createQuizStore,
   quizStoreWithoutInitProps,
-} from "@/app/(states)/(Client)/(quiz)/store";
-import { useRef } from "react";
+} from "./store";
 
 // Provider wrapper
 type QuizStoreProviderProps = React.PropsWithChildren<QuizProps>;
