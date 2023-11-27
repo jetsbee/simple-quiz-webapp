@@ -1,36 +1,40 @@
 This is a simple quiz web app with [Trivia API](https://opentdb.com/api_config.php).
 
-## Getting Started
+## 결과물 실행해 볼 수 있는 url
 
-First, run the development server:
+https://jetsbee.github.io/simple-quiz-webapp
+
+
+## 테스트 범위
+
+주요 비즈니스 로직(퀴즈 풀기)과 컴포넌트가 있는 "quiz 페이지(/quiz)"를 스토리북 활용하여 테스트 작성.
+
+현재 유저 인터렉션이 가장 많이 일어나는 부분이 quiz 페이지임.
+
+Visual test와 Interaction test 작성.
+
+
+### Visual test
+
+Server API를 목킹하여 API 결과에 따른 UI 컴포넌트 표현을 테스트.
+
+
+### Interaction test
+
+사용자 행위를 시뮬레이션함. (퀴즈를 푸는 행위)
+
+기능적인 동작을 테스트.
+
+
+## 개발환경 실행
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 테스트 실행
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+yarn test
+```
