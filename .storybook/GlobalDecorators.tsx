@@ -1,7 +1,7 @@
 import React from "react";
 import { Providers } from "../src/app/(providers)";
 import { resetAllStores } from "../src/app/(states)/(Client)/(_zustand)/zustandWithResetFns";
-import { inter } from "../src/app/layout";
+import { inter } from "../src/app/fonts";
 
 const StoreResetDecorator = (Story: React.ComponentType) => {
   resetAllStores();

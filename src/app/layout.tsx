@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Providers } from "./(providers)";
+import { inter } from "./fonts";
 import "./globals.css";
-
-export const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Simple Quiz App",
