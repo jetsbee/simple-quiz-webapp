@@ -3,58 +3,54 @@
 import { StyledButton } from "@/app/(components)/(Common)/common.styled";
 import { QuizForm } from "@/app/(components)/(QuizForm)/QuizForm";
 import { QuizIndicator } from "@/app/(components)/(QuizIndicator)/QuizIndicator";
-import { useQuizStore } from "@/app/(states)/(Client)/(quiz)/hooks";
-import { useQuestions } from "@/app/(states)/(server)/TriviaQuestions";
-import { useRouter } from "next/navigation";
-import { useRef } from "react";
 import { StyledMain } from "../(_styled)/page.styled";
+import { useQuiz } from "./(hooks)/useQuiz";
+
+const QuizLoader = () => {
+  return (
+    <StyledMain>
+      <p>잠시 기다려 주세요.</p>
+    </StyledMain>
+  );
+};
+
+const QuizErrorComponent = () => {
+  return (
+    <StyledMain>
+      <p>잠시 후 다시 시도해 주세요.</p>
+    </StyledMain>
+  );
+};
+
+const instanceOfJSXElement = (object: any): object is JSX.Element => {
+  return "props" in object;
+}; // type guard
 
 export default function Quiz() {
-  const { data, isPending, isError, isFetching } = useQuestions();
-  const { quizIdx, isAnswerSelected, setIsAnswerSelected, incrementQuizIdx } =
-    useQuizStore();
-  const router = useRouter();
-  const startTime = useRef(Date.now()).current;
+  const quizOrFallbackComponent = useQuiz({
+    handleWhileQuizPrepare: QuizLoader,
+    handleQuizError: QuizErrorComponent,
+  });
 
-  if (isPending || isFetching) {
-    return (
-      <StyledMain>
-        <p>잠시 기다려 주세요.</p>
-      </StyledMain>
-    );
-  }
-  if (isError || data?.length === 0) {
-    return (
-      <StyledMain>
-        <p>잠시 후 다시 시도해 주세요.</p>
-      </StyledMain>
-    );
+  if (instanceOfJSXElement(quizOrFallbackComponent)) {
+    return quizOrFallbackComponent;
   }
 
-  const numOfQuiz = data.length;
-  const isLastQuiz = quizIdx === numOfQuiz - 1;
-  const isSelectedAndQuizLeftMore = isAnswerSelected && !isLastQuiz;
-  const isSelectedAndDone = isAnswerSelected && isLastQuiz;
-  const safelySetNextQuiz = () => {
-    !isLastQuiz && incrementQuizIdx();
-  };
+  const {
+    numOfQuiz,
+    singleQuizInfo,
+    startTime,
+    isSelectedAndQuizLeftMore,
+    propsForNextQuizButton,
+    isSelectedAndDone,
+    propsForShowResultButton,
+  } = quizOrFallbackComponent;
 
   const propsForQuizIndicator = {
     numOfQuiz,
   };
   const propsForQuizForm = {
-    quiz: { ...data[quizIdx], numOfQuiz, startTime },
-  };
-  const propsForNextQuizButton = {
-    onClick: () => {
-      setIsAnswerSelected(false);
-      safelySetNextQuiz();
-    },
-  };
-  const propsForShowResultButton = {
-    onClick: () => {
-      router.replace(`/results?id=${startTime}`);
-    },
+    quiz: { ...singleQuizInfo, numOfQuiz, startTime },
   };
 
   return (
