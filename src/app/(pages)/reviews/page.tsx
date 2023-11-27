@@ -24,7 +24,7 @@ export default function Reviews() {
             <p>풀었던 퀴즈가 없습니다.</p>
           ) : (
             <>
-              <p>풀었던 퀴즈 결과</p>
+              <p>퀴즈 리뷰 (오답노트)</p>
               <ul>
                 {reviewIds.map((id) => (
                   <li key={id}>

@@ -45,29 +45,27 @@ export default function Quiz() {
   const propsForQuizForm = {
     quiz: { ...data[quizIdx], numOfQuiz, startTime },
   };
+  const propsForNextQuizButton = {
+    onClick: () => {
+      setIsAnswerSelected(false);
+      safelySetNextQuiz();
+    },
+  };
+  const propsForShowResultButton = {
+    onClick: () => {
+      router.replace(`/results?id=${startTime}`);
+    },
+  };
 
   return (
     <StyledMain>
       <QuizIndicator {...propsForQuizIndicator} />
       <QuizForm {...propsForQuizForm} />
       {isSelectedAndQuizLeftMore && (
-        <StyledButton
-          onClick={() => {
-            setIsAnswerSelected(false);
-            safelySetNextQuiz();
-          }}
-        >
-          다음 문항 풀기
-        </StyledButton>
+        <StyledButton {...propsForNextQuizButton}>다음 문항 풀기</StyledButton>
       )}
       {isSelectedAndDone && (
-        <StyledButton
-          onClick={() => {
-            router.replace(`/results?id=${startTime}`);
-          }}
-        >
-          결과 보기
-        </StyledButton>
+        <StyledButton {...propsForShowResultButton}>결과 보기</StyledButton>
       )}
     </StyledMain>
   );
