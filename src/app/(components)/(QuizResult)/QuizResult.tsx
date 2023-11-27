@@ -34,7 +34,7 @@ export const QuizResult = ({ id }: { id: number }) => {
     <StyledWrapper>
       <p>퀴즈 결과</p>
       <p>퀴즈를 마칠 때까지 소요된 시간: {timeFormat(durationMs)}</p>
-      <p>정답개수: {numOfCorrectAnswer}</p>
+      <p>정답 개수: {numOfCorrectAnswer}</p>
       <p>오답 수: {numOfWrongAnswer}</p>
       <SelectedAnswerChart {...propsForSelectedAnswerChart} />
     </StyledWrapper>
